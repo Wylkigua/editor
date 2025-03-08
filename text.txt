@@ -1,0 +1,2 @@
+rows->row = realloc(rows->row, sizeof(Editor_row) * (rows->count + 1));
+world
