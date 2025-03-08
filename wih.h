@@ -47,6 +47,7 @@ void free_editor_buf(Editor_row *);
 void flush_buf_to_term();
 void handle_key();
 void handle_scroll_window();
+void get_current_value_rw(int, int *, int *);
 /* TERM I/O */
 
 /* HANDLER KEY */

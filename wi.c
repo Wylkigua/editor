@@ -26,13 +26,11 @@ int main(int argc, const char *argv[]) {
 }
 
 void flush_buf_to_term() {
-
+	int file_row = 0;
+	int file_col = 0;
 	for (int i = 0; i < E.win.win_row; ++i) {
-		int file_row = i + E.win.file_row;
-		int file_col = E.win.file_col;
+		get_current_value_rw(i, &file_row, &file_col);
 		if (file_row < E.rows.count) {
-			if (file_col < 0) file_col = 0;
-			if (file_col > E.rows.row[file_row].size) file_col = E.rows.row[file_row].size;
 			mvprintw(i, 0, "%s\n", &E.rows.row[file_row].buf[file_col]);
 		} else {
 			// mvprintw(i, 0, "~ %d: %d - %d - %d - %d\n", 
@@ -43,6 +41,15 @@ void flush_buf_to_term() {
 	}
 	move(E.win.cy - E.win.file_row, E.win.cx - E.win.file_col);
 	refresh();
+}
+
+void get_current_value_rw(int row, int *file_row, int *file_col) {
+	*file_row = row + E.win.file_row;
+	*file_col = E.win.file_col;
+	if (*file_col < 0) 
+		*file_col = 0;
+	if (*file_col > E.rows.row[*file_row].size) 
+		*file_col = E.rows.row[*file_row].size;
 }
 
 void handle_scroll_window() {
